@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Promo Slot Machine Demo</title>
   <style>
     /* Slot Machine UI */
@@ -76,21 +75,19 @@
 </head>
 <body>
 
-  <h1>Promo Slot Machine Demo</h1>
-<div class="slot-demo">
-  <h2>Spin for Your Bonus!</h2>
+  <h1>Spin for Your Bonus!</h1>
 
-  <div id="slots" class="slots">
-    <span id="slot1">?</span>
-    <span id="slot2">?</span>
-    <span id="slot3">?</span>
+  <div class="slot-demo">
+    <div id="slots">
+      <span id="slot1">?</span>
+      <span id="slot2">?</span>
+      <span id="slot3">?</span>
+    </div>
+    <button id="spinBtn">SPIN</button>
+    <p id="slotResult"></p>
   </div>
 
-  <button id="spinBtn">SPIN</button>
-
-  <p id="slotResult"></p>
-</div>
-<script>
+  <script>
 const rewards = [
   "Extra 5% Bonus Credit",
   "Free Air Freshener",
@@ -143,6 +140,7 @@ spinBtn.addEventListener("click", () => {
   const reward = getRandomReward();
   animateSlots(reward);
 });
-</script>
+   </script> 
+
 </body>
 </html>
