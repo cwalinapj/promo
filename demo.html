@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promo Slot Machine Demo</title>
+  <style>
+    /* Slot Machine UI */
+.slot-machine-container {
+  margin-top: 40px;
+}
+
+.slots {
+  font-size: 48px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.slots span {
+  background: #f1f1f1;
+  padding: 12px 18px;
+  border-radius: 6px;
+  border: 2px solid #ccc;
+  width: 60px;
+  text-align: center;
+  font-weight: bold;
+}
+
+#spinBtn {
+  background: #ff4500;
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 1.2em;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#spinBtn:disabled {
+  background: #999;
+  cursor: not-allowed;
+}
+
+#slotResult {
+  font-size: 1.2em;
+  margin-top: 15px;
+  color: #0066cc;
+  font-weight: bold;
+}body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 40px;
+      background: white;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.4em;
+      color: #0066cc;
+    }
+    p {
+      font-size: 1.2em;
+      color: #333;
+    }
+    .slot-demo {
+      margin-top: 50px;
+      padding: 20px;
+      border: 2px dashed #0066cc;
+      border-radius: 8px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Promo Slot Machine Demo</h1>
+<div class="slot-demo">
+  <h2>Spin for Your Bonus!</h2>
+
+  <div id="slots" class="slots">
+    <span id="slot1">?</span>
+    <span id="slot2">?</span>
+    <span id="slot3">?</span>
+  </div>
+
+  <button id="spinBtn">SPIN</button>
+
+  <p id="slotResult"></p>
+</div>
+<script>
+const rewards = [
+  "Extra 5% Bonus Credit",
+  "Free Air Freshener",
+  "Double Giveaway Entry",
+  "10% Bonus Already Added",
+  "Free Interior Shine",
+  "Extra $10 Service Credit"
+];
+
+const slot1 = document.getElementById("slot1");
+const slot2 = document.getElementById("slot2");
+const slot3 = document.getElementById("slot3");
+const spinBtn = document.getElementById("spinBtn");
+const spinSound = new Audio("spin.mp3");
+    const spinSound = new Audio("spin.mp3");
+const slotResult = document.getElementById("slotResult");
+
+function getRandomReward() {
+  return rewards[Math.floor(Math.random() * rewards.length)];
+}
+
+function animateSlots(finalReward) {
+  const interval = setInterval(() => {
+    slot1.textContent = getRandomReward().split(" ")[0];
+    slot2.textContent = getRandomReward().split(" ")[1] || getRandomReward().split(" ")[0];
+    slot3.textContent = getRandomReward().split(" ")[2] || getRandomReward().split(" ")[0];
+  }, 100);
+
+  setTimeout(() => {
+    clearInterval(interval);
+    // Final show
+    let parts = finalReward.split(" ");
+    slot1.textContent = parts[0];
+    slot2.textContent = parts[1] || parts[0];
+    slot3.textContent = parts[2] || parts[0];
+
+    slotResult.textContent = "🎉 You won: " + finalReward + "!";
+    slotResult.innerHTML += '<br><a href="promo.html" class="btn-primary" style="margin-top:10px;">Claim Your Bonus</a>';
+
+    // Re-enable button
+    spinBtn.disabled = false;
+  }, 1400);
+}
+
+const spinSound = new Audio("spin.mp3");
+spinBtn.addEventListener("click", () => {
+    spinSound.play();
+  spinBtn.disabled = true;
+  slotResult.textContent = "";
+  const reward = getRandomReward();
+  animateSlots(reward);
+});
+</script>
+</body>
+</html>
