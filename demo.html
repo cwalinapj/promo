@@ -80,7 +80,6 @@
       border-radius: 6px;
       cursor: pointer;
       text-decoration: none;
-      inline-size: inline-block;
     }
     
     #claimBtn:hover {
@@ -112,6 +111,7 @@
     ;if(!Object.prototype.hasOwnProperty.call(n._iq,e)){n._iq[e]={_q:[]};v(n._iq[e])
     }return n._iq[e]};e.amplitude=n})(window,document);
 
+    // TODO: Replace YOUR_API_KEY with actual Amplitude API key
     amplitude.getInstance().init("YOUR_API_KEY");
   </script>
 </head>
@@ -142,6 +142,9 @@
       'Ceramic Coating Discount'
     ];
 
+    // Store current prize for tracking
+    let currentPrize = null;
+
     // Get random reward from array
     function getRandomReward() {
       return rewards[Math.floor(Math.random() * rewards.length)];
@@ -155,6 +158,9 @@
       const spinBtn = document.getElementById('spinBtn');
       const resultDiv = document.getElementById('result');
       const claimBtn = document.getElementById('claimBtn');
+
+      // Store the prize for later use
+      currentPrize = finalReward;
 
       // Disable button during animation
       spinBtn.disabled = true;
@@ -207,11 +213,9 @@
 
     // Claim button handler
     document.getElementById('claimBtn').addEventListener('click', () => {
-      const prize = document.getElementById('result').textContent.replace('You won: ', '').replace('!', '');
-      
-      // Track prize accepted
+      // Track prize accepted using stored prize value
       amplitude.getInstance().logEvent('Prize Accepted', {
-        prize: prize
+        prize: currentPrize
       });
     });
   </script>
