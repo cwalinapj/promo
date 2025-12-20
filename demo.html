@@ -1,146 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Promo Slot Machine Demo</title>
+  <title>Spin & Win</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <style>
-    /* Slot Machine UI */
-.slot-machine-container {
-  margin-top: 40px;
-}
-
-.slots {
-  font-size: 48px;
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin: 20px 0;
-}
-
-.slots span {
-  background: #f1f1f1;
-  padding: 12px 18px;
-  border-radius: 6px;
-  border: 2px solid #ccc;
-  width: 60px;
-  text-align: center;
-  font-weight: bold;
-}
-
-#spinBtn {
-  background: #ff4500;
-  color: #fff;
-  padding: 12px 24px;
-  font-size: 1.2em;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-#spinBtn:disabled {
-  background: #999;
-  cursor: not-allowed;
-}
-
-#slotResult {
-  font-size: 1.2em;
-  margin-top: 15px;
-  color: #0066cc;
-  font-weight: bold;
-}body {
+    body {
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 40px;
-      background: white;
       text-align: center;
+      padding: 40px;
     }
-    h1 {
-      font-size: 2.4em;
-      color: #0066cc;
+    #spinBtn {
+      font-size: 24px;
+      padding: 15px 30px;
+      cursor: pointer;
     }
-    p {
-      font-size: 1.2em;
-      color: #333;
+    #slotResult {
+      margin-top: 30px;
+      font-size: 22px;
     }
-    .slot-demo {
-      margin-top: 50px;
-      padding: 20px;
-      border: 2px dashed #0066cc;
-      border-radius: 8px;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
+    .btn-primary {
+      background: #007bff;
+      color: #fff;
+      padding: 12px 20px;
+      text-decoration: none;
+      border-radius: 6px;
     }
   </style>
+
+  <script src="https://cdn.amplitude.com/libs/amplitude-8.18.4-min.gz.js"></script>
+  <script>
+    amplitude.getInstance().init("88ed34d835f4847c41a5ef01e287c85c", null, {
+      defaultTracking: true
+    });
+  </script>
 </head>
+
 <body>
 
-  <h1>Spin for Your Bonus!</h1>
+  <h1>🎰 Spin to Win</h1>
 
-  <div class="slot-demo">
-    <div id="slots">
-      <span id="slot1">?</span>
-      <span id="slot2">?</span>
-      <span id="slot3">?</span>
-    </div>
-    <button id="spinBtn">SPIN</button>
-    <p id="slotResult"></p>
-  </div>
+  <button id="spinBtn">SPIN</button>
+
+  <div id="slotResult"></div>
 
   <script>
-const rewards = [
-  "Extra 5% Bonus Credit",
-  "Free Air Freshener",
-  "Double Giveaway Entry",
-  "10% Bonus Already Added",
-  "Free Interior Shine",
-  "Extra $10 Service Credit"
-];
+    console.log("JS LOADED");
 
-const slot1 = document.getElementById("slot1");
-const slot2 = document.getElementById("slot2");
-const slot3 = document.getElementById("slot3");
-const spinBtn = document.getElementById("spinBtn");
-const spinSound = new Audio("spin.mp3");
-    const spinSound = new Audio("spin.mp3");
-const slotResult = document.getElementById("slotResult");
+    const spinBtn = document.getElementById("spinBtn");
+    const slotResult = document.getElementById("slotResult");
 
-function getRandomReward() {
-  return rewards[Math.floor(Math.random() * rewards.length)];
-}
+    function spin() {
+      console.log("SPIN CLICKED");
+      amplitude.getInstance().logEvent("Slot Lever Pulled");
 
-function animateSlots(finalReward) {
-  const interval = setInterval(() => {
-    slot1.textContent = getRandomReward().split(" ")[0];
-    slot2.textContent = getRandomReward().split(" ")[1] || getRandomReward().split(" ")[0];
-    slot3.textContent = getRandomReward().split(" ")[2] || getRandomReward().split(" ")[0];
-  }, 100);
+      spinBtn.disabled = true;
 
-  setTimeout(() => {
-    clearInterval(interval);
-    // Final show
-    let parts = finalReward.split(" ");
-    slot1.textContent = parts[0];
-    slot2.textContent = parts[1] || parts[0];
-    slot3.textContent = parts[2] || parts[0];
+      setTimeout(() => {
+        const finalReward = "$500 Premium Detail";
 
-    slotResult.textContent = "🎉 You won: " + finalReward + "!";
-    slotResult.innerHTML += '<br><a href="promo.html" class="btn-primary" style="margin-top:10px;">Claim Your Bonus</a>';
+        amplitude.getInstance().logEvent("Prize Shown", {
+          prize: finalReward
+        });
 
-    // Re-enable button
-    spinBtn.disabled = false;
-  }, 1400);
-}
+        slotResult.innerHTML = `
+          🎉 You won: <strong>${finalReward}</strong>!
+          <br><br>
+          <a href="/address.html"
+             class="btn-primary"
+             onclick="amplitude.getInstance().logEvent('Prize Accepted')">
+             Claim Your Bonus
+          </a>
+        `;
 
-const spinSound = new Audio("spin.mp3");
-spinBtn.addEventListener("click", () => {
-    spinSound.play();
-  spinBtn.disabled = true;
-  slotResult.textContent = "";
-  const reward = getRandomReward();
-  animateSlots(reward);
-});
-   </script> 
+        spinBtn.disabled = false;
+      }, 1400);
+    }
+
+    spinBtn.addEventListener("click", spin);
+  </script>
 
 </body>
 </html>
