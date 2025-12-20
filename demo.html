@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spin to Win - Supreme-X Auto Detail</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+      background: #f9f9f9;
+      color: #333;
+    }
+    
+    h1 {
+      color: #222;
+      margin-bottom: 10px;
+    }
+    
+    p {
+      color: #666;
+      margin-bottom: 30px;
+    }
+    
+    .slots {
+      font-size: 48px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    
+    .slots span {
+      background: #f1f1f1;
+      padding: 12px 18px;
+      border-radius: 6px;
+      border: 2px solid #ccc;
+      width: 60px;
+      text-align: center;
+      font-weight: bold;
+    }
+    
+    #spinBtn {
+      background: #ff4500;
+      color: #fff;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 20px 0;
+    }
+    
+    #spinBtn:hover {
+      background: #e63e00;
+    }
+    
+    #spinBtn:disabled {
+      background: #999;
+      cursor: not-allowed;
+    }
+    
+    #result {
+      font-size: 1.3em;
+      margin: 20px 0;
+      min-height: 40px;
+      font-weight: bold;
+      color: #ff4500;
+    }
+    
+    #claimBtn {
+      display: none;
+      background: #28a745;
+      color: #fff;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      inline-size: inline-block;
+    }
+    
+    #claimBtn:hover {
+      background: #218838;
+    }
+  </style>
+  <script>
+    (function(e,t){var n=e.amplitude||{_q:[],_iq:{}};var r=t.createElement("script")
+    ;r.type="text/javascript"
+    ;r.integrity="sha384-+EO59vL/X7v6VE2s6/F4HxfHlK0nDUVWKVg8K9oUlvffAeeaShVBmbORTC2D3UF+"
+    ;r.crossOrigin="anonymous";r.async=true
+    ;r.src="https://cdn.amplitude.com/libs/amplitude-8.21.4-min.gz.js"
+    ;r.onload=function(){if(!e.amplitude.runQueuedFunctions){
+    console.log("[Amplitude] Error: could not load SDK")}}
+    ;var s=t.getElementsByTagName("script")[0];s.parentNode.insertBefore(r,s)
+    ;function i(e,t){e.prototype[t]=function(){
+    this._q.push([t].concat(Array.prototype.slice.call(arguments,0)));return this}}
+    var o=function(){this._q=[];return this}
+    ;var a=["add","append","clearAll","prepend","set","setOnce","unset","preInsert","postInsert","remove"]
+    ;for(var c=0;c<a.length;c++){i(o,a[c])}n.Identify=o;var l=function(){this._q=[]
+    ;return this}
+    ;var u=["setProductId","setQuantity","setPrice","setRevenueType","setEventProperties"]
+    ;for(var p=0;p<u.length;p++){i(l,u[p])}n.Revenue=l
+    ;var d=["init","logEvent","logRevenue","setUserId","setUserProperties","setOptOut","setVersionName","setDomain","setDeviceId","enableTracking","setGlobalUserProperties","identify","clearUserProperties","setGroup","logRevenueV2","regenerateDeviceId","groupIdentify","onInit","onNewSessionStart","logEventWithTimestamp","logEventWithGroups","setSessionId","resetSessionId","getDeviceId","getUserId","setMinTimeBetweenSessionsMillis","setEventUploadThreshold","setUseDynamicConfig","setServerZone","setServerUrl","sendEvents","setLibrary","setTransport"]
+    ;function v(t){function e(e){t[e]=function(){
+    t._q.push([e].concat(Array.prototype.slice.call(arguments,0)))}}
+    for(var n=0;n<d.length;n++){e(d[n])}}v(n);n.getInstance=function(e){
+    e=(!e||e.length===0?"$default_instance":e).toLowerCase()
+    ;if(!Object.prototype.hasOwnProperty.call(n._iq,e)){n._iq[e]={_q:[]};v(n._iq[e])
+    }return n._iq[e]};e.amplitude=n})(window,document);
+
+    amplitude.getInstance().init("YOUR_API_KEY");
+  </script>
+</head>
+<body>
+  <h1>🎰 Spin the Slot Machine!</h1>
+  <p>Try your luck and win an exclusive prize!</p>
+  
+  <div id="slots">
+    <span id="slot1">?</span>
+    <span id="slot2">?</span>
+    <span id="slot3">?</span>
+  </div>
+  
+  <button id="spinBtn">SPIN</button>
+  <div id="result"></div>
+  <a id="claimBtn" href="/address.html">Claim Your Prize</a>
+
+  <script>
+    // Rewards array with multiple options
+    const rewards = [
+      '10% Bonus Credit',
+      '15% Bonus Credit',
+      '20% Bonus Credit',
+      '$50 Gift Card',
+      '$100 Gift Card',
+      'Free Detail Upgrade',
+      'Premium Wash Package',
+      'Ceramic Coating Discount'
+    ];
+
+    // Get random reward from array
+    function getRandomReward() {
+      return rewards[Math.floor(Math.random() * rewards.length)];
+    }
+
+    // Animate slots spinning for 1400ms, then show final reward
+    function animateSlots(finalReward) {
+      const slot1 = document.getElementById('slot1');
+      const slot2 = document.getElementById('slot2');
+      const slot3 = document.getElementById('slot3');
+      const spinBtn = document.getElementById('spinBtn');
+      const resultDiv = document.getElementById('result');
+      const claimBtn = document.getElementById('claimBtn');
+
+      // Disable button during animation
+      spinBtn.disabled = true;
+      resultDiv.textContent = '';
+      claimBtn.style.display = 'none';
+
+      // Track slot lever pulled
+      amplitude.getInstance().logEvent('Slot Lever Pulled');
+
+      // Animation symbols
+      const symbols = ['🎰', '🎲', '💎', '⭐', '🎁', '🏆', '💰', '🔥'];
+      
+      // Animate for 1400ms
+      const animationDuration = 1400;
+      const intervalTime = 100;
+      let elapsed = 0;
+
+      const interval = setInterval(() => {
+        slot1.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        slot2.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        slot3.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        
+        elapsed += intervalTime;
+        
+        if (elapsed >= animationDuration) {
+          clearInterval(interval);
+          
+          // Show final reward
+          slot1.textContent = '🎉';
+          slot2.textContent = '🎉';
+          slot3.textContent = '🎉';
+          
+          resultDiv.textContent = `You won: ${finalReward}!`;
+          claimBtn.style.display = 'inline-block';
+          spinBtn.disabled = false;
+
+          // Track prize shown
+          amplitude.getInstance().logEvent('Prize Shown', {
+            prize: finalReward
+          });
+        }
+      }, intervalTime);
+    }
+
+    // Spin button handler
+    document.getElementById('spinBtn').addEventListener('click', () => {
+      const reward = getRandomReward();
+      animateSlots(reward);
+    });
+
+    // Claim button handler
+    document.getElementById('claimBtn').addEventListener('click', () => {
+      const prize = document.getElementById('result').textContent.replace('You won: ', '').replace('!', '');
+      
+      // Track prize accepted
+      amplitude.getInstance().logEvent('Prize Accepted', {
+        prize: prize
+      });
+    });
+  </script>
+</body>
+</html>
