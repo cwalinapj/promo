@@ -1,0 +1,44 @@
+---
+
+## Loading Behavior
+
+- Maps script is loaded dynamically
+- Failure to load Maps must block funnel progression
+- User must see a clear error message if Maps fails
+
+### Failure Handling
+If Maps or Places fails to load:
+- Disable CTA
+- Show error message
+- Do not allow checkout progression
+
+---
+
+## Address Validation Rules
+
+A valid address requires:
+- Selection from Google Places dropdown
+- Presence of street number
+- City, state, and ZIP returned
+- Map pin rendered at location
+
+Manual typing without selection is invalid.
+
+---
+
+## Security Rules
+
+- No API keys in HTML source
+- No exposing unrestricted keys
+- No server-side use of frontend Maps key
+
+---
+
+## Change Policy
+
+Any change to:
+- Maps loading strategy
+- Validation rules
+- Failure behavior
+
+MUST update this document.
